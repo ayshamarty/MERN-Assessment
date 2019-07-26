@@ -12,9 +12,7 @@ const bcrypt = require("bcrypt");
 router.get("/getAll", (req, res) => {
   const errors = {};
 
-  Users.find({}, 
-    '-password2'
-    )
+  Users.find({}, "-password2")
     .then(Users => {
       res.json(Users);
     })
@@ -29,6 +27,8 @@ router.get("/getAll", (req, res) => {
 // @access Public
 
 router.post("/create", (req, res) => {
+
+  
   const user = new Users({
     username: req.body.username,
     email: req.body.email,
@@ -43,10 +43,14 @@ router.post("/create", (req, res) => {
 
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
-        if (err) throw err;
         user.password = hash;
-        user.save();
-        res.status(200).json({ message: "User added" });
+        user.save().then(() => {
+            payload.message = "User added";
+            res.status(404).json(payload);
+        }).catch((err)=> {
+            payload.message = "A user with that username or email already exists";
+            res.status(404).json(payload);
+        });
       });
     });
   } else {
@@ -75,8 +79,5 @@ router.delete("/deleteID", (req, res) => {
       res.send(err);
     });
 });
-
-
-
 
 module.exports = router;
