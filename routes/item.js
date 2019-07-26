@@ -27,6 +27,13 @@ router.get("/getAll", (req, res) => {
 // @desc Delete item by ID
 // @access Public
 
+// Ensure body contains:
+// "username": username you signed up with
+// "password": password you signed up with
+// "id": must match "_id" of the item you wish to delete
+
+
+
 router.delete("/delete", (req, res) => {
   const errors = {};
   const checkUsername = req.body.username;
@@ -68,6 +75,12 @@ router.delete("/delete", (req, res) => {
 // @desc Create item
 // @access Public
 
+
+// Ensure body contains:
+// "username": username you signed up with
+// "password": password you signed up with
+// "content": some content to post
+
 router.post("/create", (req, res) => {
   const errors = {};
   const item = new Items({
@@ -107,6 +120,13 @@ router.post("/create", (req, res) => {
 // @routes PUT item/update
 // @desc Update item by ID
 // @access Public
+
+
+// Ensure body contains:
+// "username": username you signed up with
+// "password": password you signed up with
+// "id": must match "_id" of the item you wish to update
+// "content": content you would like to update with
 
 router.put("/update", (req, res) => {
   const errors = {};
