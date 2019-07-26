@@ -12,7 +12,7 @@ const bcrypt = require("bcrypt");
 router.get("/getAll", (req, res) => {
   const errors = {};
 
-  Users.find({}, "-password2")
+  Users.find({}, "-password2 -__v")
     .then(Users => {
       res.json(Users);
     })
@@ -21,6 +21,35 @@ router.get("/getAll", (req, res) => {
       res.status(404).json(errors);
     });
 });
+
+// @routes GET user/login
+// @desc User login
+// @access Public
+
+router.get("/login", (req,res) => {
+    const errors = {};
+  
+  const checkUsername = req.body.username;
+  const checkPassword =req.body.password;
+  let hashPassword;
+  
+  Users.findOne( {username : checkUsername} )
+  .then( user => {
+   hashPassword = user.password;
+  
+   bcrypt.compare(checkPassword, hashPassword).then(isMatch => {
+    if (isMatch) {
+      res.status(400).json({message :"login successful"})
+    } else {
+      errors.checkPassword = "passwords do not match";
+      res.status(404).json(errors);
+    }
+  }).catch((err) => res.status(404).send(err));
+  }).catch(() => res.status(404).json({message :"user does not exist"}));
+    
+  })
+
+
 
 // @routes POST user/create
 // @desc Create user
