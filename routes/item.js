@@ -29,42 +29,46 @@ router.get("/getAll", (req, res) => {
 // @access Public
 
 router.delete("/delete", (req, res) => {
-  errors = {};
-  
-  const checkPassword =req.body.password;
+  const errors = {};
+  const item = new Items({
+    username: req.body.username,
+    content: req.body.content
+  });
   const checkUsername = req.body.username;
-  const checkID = req.body.itemID;
+  const checkPassword =req.body.password;
+  
   let hashPassword;
+
 
   Users.findOne( {username : checkUsername} )
   .then( user => {
-   hashPassword = item.password;
-
+   hashPassword = user.password;
    bcrypt.compare(checkPassword, hashPassword).then(isMatch => {
     if (isMatch) {
-      Items.deleteOne({
-        _id: req.body.itemID
-      })
-        .then(({ ok, n }) => {
-          if (n === 0) {
-            errors.noDelete = "item not deleted";
-            res.status(404).json(errors);
-          }
-          res.status(200).json({ message: "item deleted" });
+      
+        Items.deleteOne({
+          _id: req.body.id
         })
-        .catch(err => {
-          res.send(err);
-        });
+          .then(({ ok, n }) => {
+            if (n === 0) {
+              errors.noDelete = "item not deleted";
+              res.status(404).json(errors);
+            }
+            res.status(200).json({ message: "item deleted" });
+          })
+          .catch(err => {
+            res.send(err);
+          });
     } else {
       errors.checkPassword = "passwords do not match";
-      errors.first = checkPassword;
-      errors.second = hashPassword;
       res.status(404).json(errors);
     }
   }).catch((err) => res.status(404).send(err));
-}).catch(() => res.status(404).json({message :"user does not exist"}));
-});
+  }).catch(() => res.status(404).json({message :"item not deleted"}));
 
+
+  
+});
 
 
 // @routes POST item/create
