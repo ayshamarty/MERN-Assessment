@@ -18,6 +18,11 @@ let userSchema = new Schema ({
         type: String,
         required: true,
         minlength: 2
+    },
+    password2: {
+        type: String,
+        required: true,
+        minlength: 2
     }
 })
 
