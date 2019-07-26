@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const uniqueValidator = require("mongoose-unique-validator")
 
 // @Create schema
 
@@ -7,11 +8,13 @@ let userSchema = new Schema ({
     username: {
         type: String,
         required: true,
+        unique: true,
         minlength: 2
     },
     email: {
         type: String,
         required: true,
+        unique: true,
         minlength: 2
     },
     password: {
@@ -25,6 +28,8 @@ let userSchema = new Schema ({
         minlength: 2
     }
 })
+
+userSchema.plugin(uniqueValidator);
 
 // @Create model
 
