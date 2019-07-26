@@ -45,7 +45,7 @@ router.get("/login", (req,res) => {
     if (isMatch) {
       res.status(400).json({message :"login successful"})
     } else {
-      errors.checkPassword = "passwords do not match";
+      errors.checkPassword = "incorrect password";
       res.status(404).json(errors);
     }
   }).catch((err) => res.status(404).send(err));
