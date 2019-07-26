@@ -8,21 +8,23 @@ const bcrypt = require("bcrypt");
 // @routes GET user/getAll
 // @desc Get all users
 // @access Public
+// for development ONLY
 
-router.get("/getAll", (req, res) => {
-  const errors = {};
 
-  Users.find({}, 
-    "-password2 -__v -password -id"
-    )
-    .then(Users => {
-      res.json(Users);
-    })
-    .catch(err => {
-      errors.findUsers = err;
-      res.status(404).json(errors);
-    });
-});
+// router.get("/getAll", (req, res) => {
+// const errors = {};
+
+//  Users.find({}, 
+//    "-password2 -__v -password -id"
+//    )
+//    .then(Users => {
+//      res.json(Users);
+//    })
+//    .catch(err => {
+//      errors.findUsers = err;
+//      res.status(404).json(errors);
+//    });
+//  });
 
 // @routes GET user/login
 // @desc User login
