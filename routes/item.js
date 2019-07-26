@@ -62,7 +62,7 @@ router.delete("/delete", (req, res) => {
                 res.send(err);
               });
           } else {
-            errors.checkPassword = "passwords do not match";
+            errors.checkPassword = "invalid password";
             res.status(404).json(errors);
           }
         })
@@ -108,7 +108,7 @@ router.post("/create", (req, res) => {
               res.status(404).json(response.errors);
             }
           } else {
-            errors.checkPassword = "passwords do not match";
+            errors.checkPassword = "invalid password";
             res.status(404).json(errors);
           }
         })
@@ -150,7 +150,7 @@ router.put("/update", (req, res) => {
                 .then(() => res.status(200).json({ message: "item updated" }))
                 .catch(err => res.send(err));
           } else {
-            errors.checkPassword = "passwords do not match";
+            errors.checkPassword = "invalid password"";
             res.status(404).json(errors);
           }
         })
@@ -158,45 +158,6 @@ router.put("/update", (req, res) => {
     })
     .catch(() => res.status(404).json({ message: "verification failed: user or item does not exist" }));
 });
-
-
-
-// router.put("/update", (req, res) => {
-//   Items.updateOne({ _id: req.body.id }, { $set: { content: req.body.content } })
-//     .then(() => res.status(200).json({ message: "item updated" }))
-//     .catch(err => res.send(err));
-// });
-
-// @route POST decrypt
-// @desk check matching value
-// @access Public
-
-router.post("/check", (req, res) => {
-  errors = {};
-
-  const checkEmail = req.body.email;
-  const checkUsername = req.body.username;
-  let hashEmail;
-
-  Items.findOne({ username: checkUsername }).then(item => {
-    hashEmail = item.email;
-
-    bcrypt
-      .compare(checkEmail, hashEmail)
-      .then(isMatch => {
-        if (isMatch) {
-          res.json({ message: "emails match" });
-        } else {
-          errors.checkEmail = "emails do not match";
-          errors.first = checkEmail;
-          errors.second = hashEmail;
-          res.status(404).json(errors);
-        }
-      })
-      .catch(err => res.status(404).send(err));
-  });
-});
-
 
 
 module.exports = router;
