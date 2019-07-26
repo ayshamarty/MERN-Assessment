@@ -73,9 +73,8 @@ router.delete("/deleteID", (req, res) => {
     });
 });
 
-
 // @routes PUT user/update
-// @desc Update user
+// @desc Update user by username
 // @access Public
 
 router.put("/update", (req, res) => {
@@ -89,5 +88,43 @@ router.put("/update", (req, res) => {
   });
 
 
+
+
+// router.put("/update", (req, res) => {
+//   validate(req)
+//     .then(() => {
+//       Users.updateOne(
+//         { username: req.body.username },
+//         { $set: { email: req.body.email } },
+//         { $set: { password: req.body.password } }
+//       );
+//     })
+//     .then(() => res.status(200).json({ message: "user updated" }))
+//     .catch(err => res.send(err));
+// });
+
+// let validate = new Promise((res, rej) => {
+//     const user = new Users({
+//         username: req.body.username,
+//         email: req.body.email,
+//         password: req.body.password
+//       });
+//     const response = validator.userVal(user);
+
+//   if (response.isValid) {
+//     payload = {};
+
+//     bcrypt.genSalt(10, (err, salt) => {
+//       bcrypt.hash(req.body.password, salt, (err, hash) => {
+//         if (err) throw err;
+//         user.password = hash;
+//         user.save();
+//         res.status(200).json({ message: "User added" });
+//       });
+//     });
+//   } else {
+//     res.send(rej.errors);
+//   }
+// });
 
 module.exports = router;
