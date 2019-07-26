@@ -12,7 +12,9 @@ const bcrypt = require("bcrypt");
 router.get("/getAll", (req, res) => {
   const errors = {};
 
-  Users.find({}, "-password2 -__v")
+  Users.find({}, 
+    "-password2 -__v -password -id"
+    )
     .then(Users => {
       res.json(Users);
     })
@@ -73,6 +75,7 @@ router.post("/create", (req, res) => {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
         user.password = hash;
+        user.password2 = hash;
         user.save().then(() => {
             payload.message = "User added";
             res.status(404).json(payload);
@@ -91,7 +94,7 @@ router.post("/create", (req, res) => {
 // @desc Delete user by ID
 // @access Public
 
-router.delete("/deleteID", (req, res) => {
+router.delete("/delete", (req, res) => {
   const errors = {};
 
   Users.deleteOne({

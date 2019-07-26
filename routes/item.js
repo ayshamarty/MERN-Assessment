@@ -68,7 +68,7 @@ router.delete("/delete", (req, res) => {
         })
         .catch(err => res.status(404).send(err));
     })
-    .catch(() => res.status(404).json({ message: "verification failed: user or item does not exist }));
+    .catch(() => res.status(404).json({ message: "verification failed: user or item does not exist " }));
 });
 
 // @routes POST item/create
