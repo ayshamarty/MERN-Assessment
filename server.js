@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const user = require("./routes/user");
+const item = require("./routes/item");
 const app = express();
 
 // Body Parser middleware
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 
 // Using the routes
 app.use("/user", user);
+app.use("/item", item);
 
 // Use default 5000 port and print port to terminal when running
 const port = process.env.PORT || 5000;
