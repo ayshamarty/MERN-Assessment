@@ -62,7 +62,7 @@ router.delete("/delete", (req, res) => {
                 res.send(err);
               });
           } else {
-            errors.checkPassword = "invalid password";
+            errors.checkPassword = "passwords do not match";
             res.status(404).json(errors);
           }
         })
@@ -108,7 +108,7 @@ router.post("/create", (req, res) => {
               res.status(404).json(response.errors);
             }
           } else {
-            errors.checkPassword = "invalid password";
+            errors.checkPassword = "passwords do not match";
             res.status(404).json(errors);
           }
         })
@@ -150,7 +150,7 @@ router.put("/update", (req, res) => {
                 .then(() => res.status(200).json({ message: "item updated" }))
                 .catch(err => res.send(err));
           } else {
-            errors.checkPassword = "invalid password"";
+            errors.checkPassword = "passwords do not match";
             res.status(404).json(errors);
           }
         })
@@ -159,5 +159,8 @@ router.put("/update", (req, res) => {
     .catch(() => res.status(404).json({ message: "verification failed: user or item does not exist" }));
 });
 
+
+
+//compare email values
 
 module.exports = router;
