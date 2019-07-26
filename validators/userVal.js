@@ -26,6 +26,14 @@ const isEmpty = require("./is-empty");
             errors.password = "Password field is required";
         }
 
+        // if (Validator.isEmpty(data.verify)) {
+        //     errors.verify = "Please verify your password";
+        // }
+
+        if (!Validator.equals(data.password, data.password2)) {
+            errors.password = "Password fields must match";
+        }
+
         return {
           errors,
           isValid: isEmpty(errors)
