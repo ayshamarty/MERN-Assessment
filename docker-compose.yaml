@@ -2,5 +2,12 @@ version: '3.3'
 services:
     mongo:
       image: mongo
+      ports:
+       - "27017:27017"
     assessment:
-      
+      image: ayshamarty/assessment
+      build:
+        context: .
+        dockerfile: Dockerfile   
+      ports:
+       - "5000:5000"
